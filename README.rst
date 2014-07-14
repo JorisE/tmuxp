@@ -1,3 +1,5 @@
+[ ![Codeship Status for JorisE/tmuxp](https://www.codeship.io/projects/f9a9dae0-ed95-0131-bc9a-361350a8353e/status)](https://www.codeship.io/projects/26707)
+
 tmuxp, a novel approach to manage `tmux(1)`_ (>= 1.8) workspaces through
 `python objects`_, JSON or YAML.
 

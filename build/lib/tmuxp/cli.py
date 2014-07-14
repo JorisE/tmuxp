@@ -150,9 +150,11 @@ class ConfigFileCompleter(argcomplete.completers.FilesCompleter):
             self, prefix, **kwargs
         )
 
-        completion += [c for c in config.in_dir(config_dir)]
+        completion += [os.path.join(config_dir, c)
+                       for c in config.in_dir(config_dir)]
 
         return completion
+
 
 class TmuxinatorCompleter(argcomplete.completers.FilesCompleter):
 
@@ -254,7 +256,6 @@ def load_workspace(config_file, args):
 
     sconfig = kaptan.Kaptan()
     sconfig = sconfig.import_config(config_file).get()
-    # expands configurations relative to config / profile file location
     sconfig = config.expand(sconfig, os.path.dirname(config_file))
     sconfig = config.trickle(sconfig)
 
@@ -387,9 +388,6 @@ def command_freeze(args):
 
         dest = os.path.abspath(os.path.relpath(os.path.expanduser(dest)))
         if args.answer_yes or prompt_yes_no('Save to %s?' % dest):
-            destdir = os.path.dirname(dest)
-            if not os.path.isdir(destdir):
-                os.makedirs(destdir)
             buf = open(dest, 'w')
             buf.write(newconfig)
             buf.close()
